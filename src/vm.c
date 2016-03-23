@@ -33,6 +33,7 @@ void freeVM(VM* vm) {
 void dumpVMState(VM* vm) {
     printf("Num Objects: %d\n", vm->numObjects);
     printf("Max Objects: %d\n", vm->maxObjects);
+    printf("Stack position: %d\n", vm->stackPos);
 
     for (int s = 0; s < vm->stackPos; s++) {
         printf("[0x%02x] %s\n", s, objToString(vm->stack[s]));
@@ -97,6 +98,8 @@ void pushPair(VM* vm) {
     Object* obj = newObject(vm, ObjPair);
     obj->head = popStack(vm);
     obj->tail = popStack(vm);
+
+    pushStack(vm, obj);
 }
 
 
