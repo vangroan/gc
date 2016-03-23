@@ -14,11 +14,8 @@ VM* newVM() {
     VM* vm = (VM*)malloc(sizeof(VM));
 
     vm->stackPos = 0;
-
     vm->numObjects = 0;
-
     vm->maxObjects = INITIAL_MAX_OBJECTS;
-
     vm->firstObject = NULL;
 
     return vm;
