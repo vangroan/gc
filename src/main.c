@@ -28,6 +28,12 @@ void demo(VM* vm) {
     gc(vm);
 
     dumpVMState(vm);
+
+    printf("\n");
+    printf("Push integers past max objects\n");
+    for (int i = 0; i < 12; i++) pushInt(vm, i);
+
+    dumpVMState(vm); 
 }
 
 

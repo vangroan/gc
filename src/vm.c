@@ -65,8 +65,9 @@ Object* popStack(VM* vm) {
 
 
 Object* newObject(VM* vm, ObjectType type) {
+    if (vm->numObjects == vm->maxObjects) gc(vm);
+
     Object* obj = (Object*)malloc(sizeof(Object));
-    
     obj->type = type;
     obj->marked = 0;
     obj->next = vm->firstObject;
@@ -133,4 +134,6 @@ void sweep(VM* vm) {
 void gc(VM* vm) {
     markAll(vm);
     sweep(vm);
+
+    vm->maxObjects = vm->numObjects * 2 + 10;
 }
