@@ -30,6 +30,28 @@ void freeVM(VM* vm) {
 }
 
 
+void dumpVMState(VM* vm) {
+    printf("Num Objects: %d\n", vm->numObjects);
+    printf("Max Objects: %d\n", vm->maxObjects);
+
+    for (int s = 0; s < vm->stackPos; s++) {
+        printf("[0x%02x] %s\n", s, objToString(vm->stack[s]));
+    }
+}
+
+
+const char* objToString(Object* obj) {
+    switch(obj->type) {
+        case ObjInt:
+            return "Int";
+        case ObjPair:
+            return "Pair";
+        default: 
+            return "Unknown";
+    }
+}
+
+
 void pushStack(VM* vm, Object* obj) {
     assert(vm->stackPos < MAX_STACK_SIZE, "Stack overflow");
 
@@ -57,6 +79,8 @@ Object* newObject(VM* vm, ObjectType type) {
         obj->nextObject = vm->firstObject;
         vm->firstObject = obj;
     }
+
+    vm->numObjects++;
 
     return obj;
 }

@@ -53,6 +53,11 @@ VM* newVM();
 
 void freeVM(VM* vm);
 
+void dumpVMState(VM* vm);
+
+// Returns a string representation of an object. 
+const char* objToString(Object* obj);
+
 void pushStack(VM* vm, Object* obj);
 
 Object* popStack(VM* vm);
