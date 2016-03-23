@@ -21,7 +21,7 @@ typedef struct sObject {
 
     bool marked;
 
-    struct sObject* nextObject;
+    struct sObject* next;
 
     union {
         int value;

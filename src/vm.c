@@ -68,16 +68,9 @@ Object* newObject(VM* vm, ObjectType type) {
     Object* obj = (Object*)malloc(sizeof(Object));
     
     obj->type = type;
-
     obj->marked = 0;
-
-    if (vm->firstObject == NULL) {
-        vm->firstObject = obj;
-    } else {
-        obj->nextObject = vm->firstObject;
-        vm->firstObject = obj;
-    }
-
+    obj->next = vm->firstObject;
+    vm->firstObject = obj;
     vm->numObjects++;
 
     return obj;
@@ -119,7 +112,22 @@ void markAll(VM* vm) {
 
 
 void sweep(VM* vm) {
-    // TODO
+    Object** object = &vm->firstObject;
+    while (*object) {
+        if (!(*object)->marked) {
+            // Object not reached
+            Object* unreached = *object;
+
+            *object = unreached->next;
+            free(unreached);
+
+            vm->numObjects--;
+        } else {
+            // Object reached
+            (*object)->marked = 0;
+            object = &(*object)->next;
+        }
+    }
 }
 
 void gc(VM* vm) {

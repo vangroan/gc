@@ -18,14 +18,13 @@ void demo(VM* vm) {
     dumpVMState(vm);
 
     printf("\n");
-    printf("Collect garbage\n");
-    gc(vm);
+    printf("Pop pair off stack\n");
+    popStack(vm);
 
     dumpVMState(vm);
 
     printf("\n");
-    printf("Popping the pair off the stack, and collection garbage again\n");
-    popStack(vm);
+    printf("Collect garbage\n");
     gc(vm);
 
     dumpVMState(vm);
